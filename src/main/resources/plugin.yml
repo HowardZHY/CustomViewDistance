@@ -4,21 +4,19 @@ version: 1.8.8
 website: http://www.github.com/HowardZHY
 author: HowardZHY
 description: >
-             Set the view distance on a server-wide, and per-player basis.
+             Set the view distance on a server and per-player base.
              Allows setting variable view distance based on server load.
 commands:
   setview:
     description: Set the view distance.
     usage: |
-           /<command> [server|world <name>|player <name>] distance
-           Example: /<command> server 8 - set the server view distance to 8.
-           Example: /<command> player admin 15 - set the "admin" player's view distance to 15.
+           /<command> [server|player <name>] distance
+           [Example]: /<command> server 8 - set the server view distance to 8.
+           [Example]: /<command> player test 15 - set the "test" player's view distance to 15.
   resetview:
     description: Reset the view distance to defaults.
     usage: |
-           /<command> [server|world <name>|player <name>] distance
-           Example: /<command> server - reset the server view distance to 5.
-           Example: /<command> player admin - reset the "admin" player's view distance to the world's.
+           /<command> [server|player <name>] distance
 permissions:
   viewdistance:
     default: op
@@ -30,7 +28,7 @@ permissions:
   viewdistance.set:
     description: |
                  allow the setting of all view distances
-                 can use world.worldname and player.playername for fine grained control
+                 can use player.playername for fine grained control
     children:
       viewdistance.set.server: true
       viewdistance.set.player: true
@@ -45,7 +43,7 @@ permissions:
   viewdistance.reset:
     description: |
                  allow the resetting of all view distances
-                 can use world.worldname and player.playername for fine grained control
+                 can use player.playername for fine grained control
     children:
       viewdistance.reset.server: true
       viewdistance.reset.player: true
