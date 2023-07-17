@@ -1,0 +1,58 @@
+name: CustomViewDistance
+main: com128.kzf.p.viewdistance.viewdistance.CustomViewDistance
+version: 1.8.8
+website: http://www.github.com/HowardZHY
+author: HowardZHY
+description: >
+             Set the view distance on a server-wide, and per-player basis.
+             Allows setting variable view distance based on server load.
+commands:
+  setview:
+    description: Set the view distance.
+    usage: |
+           /<command> [server|world <name>|player <name>] distance
+           Example: /<command> server 8 - set the server view distance to 8.
+           Example: /<command> player admin 15 - set the "admin" player's view distance to 15.
+  resetview:
+    description: Reset the view distance to defaults.
+    usage: |
+           /<command> [server|world <name>|player <name>] distance
+           Example: /<command> server - reset the server view distance to 5.
+           Example: /<command> player admin - reset the "admin" player's view distance to the world's.
+permissions:
+  viewdistance:
+    default: op
+    description: allow full control over view distances
+    children:
+      viewdistance.set: true
+      viewdistance.reset: true
+
+  viewdistance.set:
+    description: |
+                 allow the setting of all view distances
+                 can use world.worldname and player.playername for fine grained control
+    children:
+      viewdistance.set.server: true
+      viewdistance.set.player: true
+  viewdistance.set.server:
+    description: allow setting of the server view distance
+  viewdistance.set.player:
+    description: allow setting of all player view distances
+  viewdistance.set.self:
+    description: allow setting of a player's own view distance
+    default: false
+
+  viewdistance.reset:
+    description: |
+                 allow the resetting of all view distances
+                 can use world.worldname and player.playername for fine grained control
+    children:
+      viewdistance.reset.server: true
+      viewdistance.reset.player: true
+  viewdistance.reset.server:
+    description: allow resetting of the server view distance
+  viewdistance.reset.player:
+    description: allow resetting of all player view distances
+  viewdistance.reset.self:
+    description: allow resetting of a player's own view distance
+    default: false
