@@ -8,6 +8,8 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 public class ResetViewCommand implements CommandExecutor {
     public int defaultViewDistance = Bukkit.getViewDistance();
@@ -20,30 +22,30 @@ public class ResetViewCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length > 0) {
-            if ("server".equalsIgnoreCase(args[0])) {
-                return resetServerViewDistance(sender, plugin.getServer());
-            }
-        }
-        return false;
+        return resetViewDistance(sender, plugin.getServer());
     }
 
-    private boolean resetServerViewDistance(CommandSender sender, Server server) {
+    private boolean resetViewDistance(CommandSender sender, Server server) {
         if (server == null) {
             return false;
         }
-        if (!sender.hasPermission("viewdistance.reset.server") && !sender.hasPermission("viewdistance.reset.server." + server.getName())) {
+        if (!sender.hasPermission("viewdistance.reset")) {
             sender.sendMessage("You have no permission to use this command.");
             return true;
         }
         try {
             // NMS
             this.playerList.a(defaultViewDistance);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             sender.sendMessage(e.getMessage());
             return false;
         }
         sender.sendMessage("Server view distance reset. It's now " + server.getViewDistance());
+        if (sender instanceof Player) {
+            CraftPlayer player = (CraftPlayer) sender;
+            MinecraftServer.getServer().getWorldServer(0).getPlayerChunkMap().updateViewDistance(player.getHandle(), defaultViewDistance);
+            sender.sendMessage("Player " + player.getName() + " 's view distance reset to " + defaultViewDistance);
+        }
         return true;
     }
 }

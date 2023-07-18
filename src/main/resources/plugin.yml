@@ -38,7 +38,7 @@ permissions:
     description: allow setting of all player view distances
   viewdistance.set.self:
     description: allow setting of a player's own view distance
-    default: false
+    default: true
 
   viewdistance.reset:
     description: |
@@ -46,11 +46,8 @@ permissions:
                  can use player.playername for fine grained control
     children:
       viewdistance.reset.server: true
-      viewdistance.reset.player: true
   viewdistance.reset.server:
     description: allow resetting of the server view distance
-  viewdistance.reset.player:
-    description: allow resetting of all player view distances
   viewdistance.reset.self:
     description: allow resetting of a player's own view distance
-    default: false
+    default: true

@@ -51,10 +51,14 @@ public class SetViewCommand implements CommandExecutor {
             return false;
         }
         if (!sender.hasPermission("viewdistance.set.server") && !sender.hasPermission("viewdistance.set.server." + server.getName())) {
-            sender.sendMessage("You do not have permission to use this command.");
+            sender.sendMessage("You have no permission to use this command.");
             return true;
         }
         try {
+            if (Integer.parseInt(viewDistance) <= 1) {
+                sender.sendMessage("View Distance should more than 2.");
+                return false;
+            }
             if (plugin.setServerViewDistance(Integer.parseInt(viewDistance))) {
                 sender.sendMessage("Server view distance set to "+viewDistance);
                 return true;
@@ -77,7 +81,7 @@ public class SetViewCommand implements CommandExecutor {
         }
         try {
             if (plugin.setPlayerViewDistance((CraftPlayer) player, Integer.parseInt(viewDistance))) {
-                sender.sendMessage("Player \""+player.getName()+"\" view distance set to "+viewDistance);
+                sender.sendMessage("Player \"" + player.getName() + "\" view distance set to " + viewDistance);
                 return true;
             }
         } catch (NumberFormatException ignored) {
